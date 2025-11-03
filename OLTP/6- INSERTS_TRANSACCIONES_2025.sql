@@ -2627,3 +2627,28 @@ INSERT INTO trx_detalle_insumos (id_detalle_insumo, id_detalle, id_insumo, descr
 INSERT INTO trx_detalle (id_detalle, id_atencion, id_servicio, id_medico, cantidad, precio_unitario, total_servicio, observacion, created_at) VALUES (736, 356, 11, 14, 1, 60.88, 60.88, 'Servicio prestado', TO_TIMESTAMP('2025-10-28 00:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 INSERT INTO trx_detalle_insumos (id_detalle_insumo, id_detalle, id_insumo, descripcion, cantidad, precio_unitario, total_insumo, created_at) VALUES (352, 736, 10, 'Uso durante procedimiento', 1, 4.85, 4.85, TO_TIMESTAMP('2025-10-28 00:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 INSERT INTO trx_pagos (id_pago, id_atencion, fecha_pago, monto, metodo, observacion, created_at) VALUES (471, 356, TO_TIMESTAMP('2025-10-28 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 73.98, 'CHEQUE', 'Pago correspondiente a atención', TO_TIMESTAMP('2025-10-28 00:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+
+-- UPDATE PARA ASIGNAR ATENCIONES QUE SI HAYAN HECHO USO DEL SEGURO
+
+-- Cambia N por S al azar en un 30% de los registros
+UPDATE trx_atenciones
+SET uso_seguro = 'S'
+WHERE id_atencion IN (
+  SELECT id_atencion
+  FROM (
+    SELECT id_atencion
+    FROM trx_atenciones
+    WHERE uso_seguro = 'N'
+    ORDER BY DBMS_RANDOM.VALUE
+  )
+  WHERE ROWNUM <= (SELECT ROUND(COUNT(*) * 0.3) FROM trx_atenciones)
+);
+
+-- Asigna cobertura solo a detalles cuya atención usa seguro
+UPDATE trx_detalle d
+SET d.cobertura = ROUND(DBMS_RANDOM.VALUE(10, d.total_servicio * 0.8), 2)
+WHERE d.id_atencion IN (
+  SELECT a.id_atencion
+  FROM trx_atenciones a
+  WHERE a.uso_seguro = 'S'
+);
