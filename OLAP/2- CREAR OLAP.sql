@@ -78,6 +78,15 @@ CREATE TABLE dim_tipo_urgencia (
     nivel_prioridad NUMBER
 );
 
+CREATE TABLE dim_insumos (
+    id_insumo NUMBER PRIMARY KEY,
+    nombre VARCHAR2(100) NOT NULL,
+    descripcion VARCHAR2(200),
+    unidad_medida VARCHAR2(50),
+    precio_unitario_promedio NUMBER(10,2),
+    estado VARCHAR2(20) DEFAULT 'ACTIVO' CHECK (estado IN ('ACTIVO','INACTIVO'))
+);
+
 CREATE TABLE fact_consultas_medicas(
     id_atencion NUMBER,
     id_paciente NUMBER,
@@ -90,4 +99,17 @@ CREATE TABLE fact_consultas_medicas(
     id_tipo_urgencia NUMBER,
     cobertura_seguro NUMBER(10, 2),
     costo_total NUMBER(10, 2)
+);
+
+CREATE TABLE fact_insumos (
+    id_atencion NUMBER,
+    id_insumo NUMBER,
+    id_detalle NUMBER,
+    id_tiempo NUMBER,
+    cantidad NUMBER(10,2),
+    costo_unitario NUMBER(10,2),
+    costo_total NUMBER(12,2),
+    CONSTRAINT fk_fi_atencion FOREIGN KEY (id_atencion) REFERENCES fact_consultas_medicas(id_atencion),
+    CONSTRAINT fk_fi_insumo FOREIGN KEY (id_insumo) REFERENCES dim_insumos(id_insumo),
+    CONSTRAINT fk_fi_tiempo FOREIGN KEY (id_tiempo) REFERENCES dim_tiempo(id_tiempo)
 );
