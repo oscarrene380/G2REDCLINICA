@@ -9,7 +9,7 @@ NOCYCLE;
 
 -- TRIGGER AFTER INSERT, PARA GENERAR EL CODIGO DE ATENCION SIGUIENDO EL FORMATO: AT-{CLINICA}-{YYYYMMDD}-{SEQ}
 CREATE OR REPLACE TRIGGER trg_set_codigo_atencion
-AFTER INSERT ON trx_atenciones
+BEFORE INSERT ON trx_atenciones
 FOR EACH ROW
 DECLARE
     v_fecha VARCHAR2(8);
@@ -21,13 +21,10 @@ BEGIN
     -- Obtener secuencia con formato de 4 dígitos
     v_seq := LPAD(seq_codigo_atencion.NEXTVAL, 4, '0');
 
-    -- Actualizar el campo codigo_atencion
-    UPDATE trx_atenciones
-    SET codigo_atencion = 'AT-' || :NEW.id_unidad || '-' || v_fecha || '-' || v_seq
-    WHERE id_atencion = :NEW.id_atencion;
+    -- Asignar directamente el código SIN usar UPDATE
+    :NEW.codigo_atencion := 'AT-' || :NEW.id_unidad || '-' || v_fecha || '-' || v_seq;
 END;
 /
-
 
 -- TRIGGERS PARA VALIDACION DE DATOS
 
