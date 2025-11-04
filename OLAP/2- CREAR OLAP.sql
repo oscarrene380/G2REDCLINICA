@@ -8,7 +8,7 @@ CREATE TABLE dim_paciente(
     fecha_nacimiento DATE NOT NULL,
     edad INT NOT NULL,
     telefono VARCHAR2(15),
-    email VARCHAR2(2),
+    email VARCHAR2(100),
     direccion VARCHAR2(200),
     departamento  VARCHAR2(50),
     municipio  VARCHAR2(50),
@@ -18,7 +18,7 @@ CREATE TABLE dim_paciente(
 CREATE TABLE dim_medico (
     id_medico NUMBER,
     nombre VARCHAR2(100),
-    numero_registro VARCHAR2,
+    numero_registro VARCHAR2(50),
     direccion VARCHAR2(200),
     telefono VARCHAR2(15),
     email VARCHAR2(100),
@@ -108,8 +108,5 @@ CREATE TABLE fact_insumos (
     id_tiempo NUMBER,
     cantidad NUMBER(10,2),
     costo_unitario NUMBER(10,2),
-    costo_total NUMBER(12,2),
-    CONSTRAINT fk_fi_atencion FOREIGN KEY (id_atencion) REFERENCES fact_consultas_medicas(id_atencion),
-    CONSTRAINT fk_fi_insumo FOREIGN KEY (id_insumo) REFERENCES dim_insumos(id_insumo),
-    CONSTRAINT fk_fi_tiempo FOREIGN KEY (id_tiempo) REFERENCES dim_tiempo(id_tiempo)
+    costo_total NUMBER(12,2)
 );
