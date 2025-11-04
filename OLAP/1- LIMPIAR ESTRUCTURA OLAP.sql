@@ -5,6 +5,7 @@ BEGIN
         FROM user_tables 
         WHERE table_name IN (
             'DIM_PACIENTE',
+            'DIM_ESPECIALIDADES',
             'DIM_MEDICO',
             'DIM_UNIDADES',
             'DIM_ASEGURADORAS',

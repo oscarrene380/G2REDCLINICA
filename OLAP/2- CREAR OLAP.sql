@@ -15,6 +15,12 @@ CREATE TABLE dim_paciente(
     distrito  VARCHAR2(50)
 );
 
+CREATE TABLE dim_especialidades (
+    id_especialidad NUMBER,
+    nombre VARCHAR2(100) NOT NULL UNIQUE,
+    descripcion VARCHAR2(200)
+);
+
 CREATE TABLE dim_medico (
     id_medico NUMBER,
     nombre VARCHAR2(100),
@@ -22,7 +28,7 @@ CREATE TABLE dim_medico (
     direccion VARCHAR2(200),
     telefono VARCHAR2(15),
     email VARCHAR2(100),
-    especialidad VARCHAR2(100)
+    id_especialidad NUMBER
 );
 
 CREATE TABLE dim_unidades (
@@ -47,7 +53,7 @@ CREATE TABLE dim_servicios(
     codigo_estandar VARCHAR2(50),
     descripcion VARCHAR2(100),
     tipo_servicio VARCHAR2(100),
-    especialidad VARCHAR2(100),
+    id_especialidad NUMBER,
     precio_unitario NUMBER(10, 2)
 );
 

@@ -29,6 +29,24 @@ WHEN NOT MATCHED THEN
     INSERT (id_paciente, nombre, sexo, fecha_nacimiento, edad, telefono, email, direccion, departamento, municipio, distrito)
     VALUES (src.id_paciente, src.nombre, src.sexo, src.fecha_nacimiento, src.edad, src.telefono, src.email, src.direccion, src.departamento, src.municipio, src.distrito);
 
+-- INSERT PARA DIM_ESPECIALIDADES
+MERGE INTO dim_especialidades d
+USING (
+    SELECT 
+        e.id_especialidad,
+        e.nombre,
+        e.descripcion
+    FROM trx_especialidades e
+) src
+ON (d.id_especialidad = src.id_especialidad)
+WHEN MATCHED THEN
+    UPDATE SET
+        d.nombre = src.nombre,
+        d.descripcion = src.descripcion
+WHEN NOT MATCHED THEN
+    INSERT (id_especialidad, nombre, descripcion)
+    VALUES (src.id_especialidad, src.nombre, src.descripcion);
+
 
 -- INSERT PARA LA DIM_MEDICO
 MERGE INTO dim_medico d
@@ -40,7 +58,7 @@ USING (
         M.DIRECCION,
         M.TELEFONO,
         M.EMAIL,
-        E.NOMBRE AS ESPECIALIDAD
+        ME.ID_ESPECIALIDAD
     FROM TRX_MEDICOS M
     LEFT JOIN TRX_MEDICO_ESPECIALIDADES ME ON M.ID_MEDICO = ME.ID_MEDICO
     LEFT JOIN TRX_ESPECIALIDADES E ON ME.ID_ESPECIALIDAD = E.ID_ESPECIALIDAD
@@ -53,10 +71,10 @@ WHEN MATCHED THEN
         d.direccion = src.direccion,
         d.telefono = src.telefono,
         d.email = src.email,
-        d.especialidad = src.especialidad
+        d.id_especialidad = src.id_especialidad
 WHEN NOT MATCHED THEN
-    INSERT (id_medico, nombre, numero_registro, direccion, telefono, email, especialidad)
-    VALUES (src.id_medico, src.nombre, src.numero_registro, src.direccion, src.telefono, src.email, src.especialidad);
+    INSERT (id_medico, nombre, numero_registro, direccion, telefono, email, id_especialidad)
+    VALUES (src.id_medico, src.nombre, src.numero_registro, src.direccion, src.telefono, src.email, src.id_especialidad);
 
 
 -- INSERT PARA LA DIM_UNIDADES
@@ -116,7 +134,7 @@ USING (
         S.CODIGO_ESTANDAR,
         S.DESCRIPCION,
         TS.NOMBRE AS TIPO_SERVICIO,
-        E.NOMBRE AS ESPECIALIDAD,
+        E.id_especialidad,
         S.PRECIO_UNITARIO
     FROM TRX_SERVICIOS S
     INNER JOIN TRX_TIPOS_SERVICIOS TS ON S.ID_TIPO_SERVICIO = TS.ID_TIPO_SERVICIO
@@ -128,11 +146,11 @@ WHEN MATCHED THEN
         d.codigo_estandar = src.codigo_estandar,
         d.descripcion = src.descripcion,
         d.tipo_servicio = src.tipo_servicio,
-        d.especialidad = src.especialidad,
+        d.id_especialidad = src.id_especialidad,
         d.precio_unitario = src.precio_unitario
 WHEN NOT MATCHED THEN
-    INSERT (id_servicio, codigo_estandar, descripcion, tipo_servicio, especialidad, precio_unitario)
-    VALUES (src.id_servicio, src.codigo_estandar, src.descripcion, src.tipo_servicio, src.especialidad, src.precio_unitario);
+    INSERT (id_servicio, codigo_estandar, descripcion, tipo_servicio, id_especialidad, precio_unitario)
+    VALUES (src.id_servicio, src.codigo_estandar, src.descripcion, src.tipo_servicio, src.id_especialidad, src.precio_unitario);
 
 -- INSERT PARA LA DIM_SEGUROS
 MERGE INTO dim_seguros d
@@ -334,3 +352,5 @@ WHEN NOT MATCHED THEN
         src.costo_unitario,
         src.costo_total
     );
+
+COMMIT ;
