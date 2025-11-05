@@ -1,0 +1,93 @@
+{
+   "ID_ATENCION":1,
+   "CODIGO_ATENCION":"AT-9-20250529-0001",
+   "FECHA_ATENCION":"2025-05-29T00:00:00",
+   "PACIENTE":{
+      "ID_PACIENTE":1,
+      "NOMBRE":"Carlos Hernández",
+      "EDAD":40,
+      "SEXO":"M",
+      "ZONA":{
+         "DEPARTAMENTO":"Ahuachapán",
+         "MUNICIPIO":"Ahuachapán Sur",
+         "DISTRITO":"Distrito de San Pedro Puxtla"
+      }
+   },
+   "SERVICIOS":[
+      {
+         "ID_SERVICIO":2,
+         "DESCRIPCION":"Hemograma Completo",
+         "PRECIO_UNITARIO":30,
+         "COBERTURA":14.14,
+         "DEDUCIBLE":15,
+         "TOTAL_SERVICIO":68.72,
+         "MEDICO":{
+            "ID_MEDICO":1,
+            "NOMBRE":"Dr. Carlos Hernández"
+         },
+         "ESPECIALIDAD":"Hematología"
+      },
+      {
+         "ID_SERVICIO":2,
+         "DESCRIPCION":"Hemograma Completo",
+         "PRECIO_UNITARIO":30,
+         "COBERTURA":14.14,
+         "DEDUCIBLE":15,
+         "TOTAL_SERVICIO":68.72,
+         "MEDICO":{
+            "ID_MEDICO":1,
+            "NOMBRE":"Dr. Carlos Hernández"
+         },
+         "ESPECIALIDAD":"Hematología"
+      },
+      {
+         "ID_SERVICIO":19,
+         "DESCRIPCION":"Prueba de Función Hepática",
+         "PRECIO_UNITARIO":45,
+         "COBERTURA":34.42,
+         "DEDUCIBLE":0,
+         "TOTAL_SERVICIO":82.51,
+         "MEDICO":{
+            "ID_MEDICO":9,
+            "NOMBRE":"Dr. José Antonio Cruz"
+         },
+         "ESPECIALIDAD":"Medicina General"
+      },
+      {
+         "ID_SERVICIO":12,
+         "DESCRIPCION":"Consulta Nutricional",
+         "PRECIO_UNITARIO":55,
+         "COBERTURA":20.87,
+         "DEDUCIBLE":15,
+         "TOTAL_SERVICIO":60.56,
+         "MEDICO":{
+            "ID_MEDICO":3,
+            "NOMBRE":"Dr. Jorge Ramírez"
+         },
+         "ESPECIALIDAD":"Medicina General"
+      },
+      {
+         "ID_SERVICIO":12,
+         "DESCRIPCION":"Consulta Nutricional",
+         "PRECIO_UNITARIO":55,
+         "COBERTURA":20.87,
+         "DEDUCIBLE":15,
+         "TOTAL_SERVICIO":60.56,
+         "MEDICO":{
+            "ID_MEDICO":3,
+            "NOMBRE":"Dr. Jorge Ramírez"
+         },
+         "ESPECIALIDAD":"Medicina General"
+      }
+   ],
+   "UNIDAD_CLINICA":{
+      "ID_UNIDAD":9,
+      "NOMBRE":"Hospital Roosevelt",
+      "DIRECCION":"Col. Médica, San Salvador",
+      "TIPO":"Hospital"
+   },
+   "MONTO_TOTAL":240.21,
+   "MONTO_PAGADO":240.21,
+   "COBERTURA_SEGURO":69.43,
+   "FIRMA_DIGITAL":"CCFEFB335A2CD2210A3DCB45FD4352BD15FD77C945E04E1E9522188934908951"
+}
