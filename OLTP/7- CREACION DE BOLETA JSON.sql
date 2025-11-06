@@ -22,25 +22,44 @@ BEGIN
         'SERVICIOS' VALUE (
             SELECT JSON_ARRAYAGG(
                 JSON_OBJECT(
-                    'ID_SERVICIO' VALUE S.ID_SERVICIO,
-                    'DESCRIPCION' VALUE S.DESCRIPCION,
-                    'PRECIO_UNITARIO' VALUE S.PRECIO_UNITARIO,
-                    'COBERTURA' VALUE DET.COBERTURA,
-                    'DEDUCIBLE' VALUE NVL(SS.DEDUCIBLE, 0),
-                    'TOTAL_SERVICIO' VALUE DET.TOTAL_SERVICIO,
+                    'ID_SERVICIO' VALUE ID_SERVICIO,
+                    'DESCRIPCION' VALUE DESCRIPCION,
+                    'PRECIO_UNITARIO' VALUE PRECIO_UNITARIO,
+                    'CANTIDAD' VALUE CANTIDAD,
+                    'COBERTURA' VALUE COBERTURA,
+                    'DEDUCIBLE' VALUE DEDUCIBLE,
+                    'TOTAL_SERVICIO' VALUE TOTAL_SERVICIO,
                     'MEDICO' VALUE JSON_OBJECT(
-                        'ID_MEDICO' VALUE M.ID_MEDICO,
-                        'NOMBRE' VALUE M.NOMBRE
+                        'ID_MEDICO' VALUE ID_MEDICO,
+                        'NOMBRE' VALUE NOMBRE_MEDICO
                     ),
-                    'ESPECIALIDAD' VALUE E.NOMBRE
+                    'ESPECIALIDAD' VALUE ESPECIALIDAD
                 )
             )
-            FROM TRX_DETALLE DET
-            JOIN TRX_SERVICIOS S ON DET.ID_SERVICIO = S.ID_SERVICIO
-            LEFT JOIN TRX_ESPECIALIDADES E ON S.ID_ESPECIALIDAD = E.ID_ESPECIALIDAD
-            JOIN TRX_MEDICOS M ON DET.ID_MEDICO = M.ID_MEDICO
-            LEFT JOIN TRX_SEGURO_SERVICIOS SS ON S.ID_SERVICIO = SS.ID_SERVICIO
-            WHERE DET.ID_ATENCION = A.ID_ATENCION
+            FROM 
+            (
+                SELECT 
+                    S.ID_SERVICIO,
+                    S.DESCRIPCION,
+                    S.PRECIO_UNITARIO,
+                    DET.CANTIDAD,
+                    DET.COBERTURA,
+                    NVL(MAX(SS.DEDUCIBLE), 0) AS DEDUCIBLE,
+                    DET.TOTAL_SERVICIO,
+                    M.ID_MEDICO,
+                    M.NOMBRE AS NOMBRE_MEDICO,
+                    E.NOMBRE AS ESPECIALIDAD
+                FROM TRX_DETALLE DET
+                JOIN TRX_SERVICIOS S ON DET.ID_SERVICIO = S.ID_SERVICIO
+                LEFT JOIN TRX_ESPECIALIDADES E ON S.ID_ESPECIALIDAD = E.ID_ESPECIALIDAD
+                JOIN TRX_MEDICOS M ON DET.ID_MEDICO = M.ID_MEDICO
+                LEFT JOIN TRX_SEGURO_SERVICIOS SS ON S.ID_SERVICIO = SS.ID_SERVICIO
+                WHERE DET.ID_ATENCION = A.ID_ATENCION
+                GROUP BY 
+                    S.ID_SERVICIO, S.DESCRIPCION, S.PRECIO_UNITARIO,
+                    DET.CANTIDAD, DET.COBERTURA, DET.TOTAL_SERVICIO,
+                    M.ID_MEDICO, M.NOMBRE, E.NOMBRE
+            )
         ),
         'UNIDAD_CLINICA' VALUE JSON_OBJECT(
             'ID_UNIDAD' VALUE U.ID_UNIDAD,

@@ -18,19 +18,7 @@
          "ID_SERVICIO":2,
          "DESCRIPCION":"Hemograma Completo",
          "PRECIO_UNITARIO":30,
-         "COBERTURA":14.14,
-         "DEDUCIBLE":15,
-         "TOTAL_SERVICIO":68.72,
-         "MEDICO":{
-            "ID_MEDICO":1,
-            "NOMBRE":"Dr. Carlos Hernández"
-         },
-         "ESPECIALIDAD":"Hematología"
-      },
-      {
-         "ID_SERVICIO":2,
-         "DESCRIPCION":"Hemograma Completo",
-         "PRECIO_UNITARIO":30,
+         "CANTIDAD":2,
          "COBERTURA":14.14,
          "DEDUCIBLE":15,
          "TOTAL_SERVICIO":68.72,
@@ -44,6 +32,7 @@
          "ID_SERVICIO":19,
          "DESCRIPCION":"Prueba de Función Hepática",
          "PRECIO_UNITARIO":45,
+         "CANTIDAD":1,
          "COBERTURA":34.42,
          "DEDUCIBLE":0,
          "TOTAL_SERVICIO":82.51,
@@ -57,19 +46,7 @@
          "ID_SERVICIO":12,
          "DESCRIPCION":"Consulta Nutricional",
          "PRECIO_UNITARIO":55,
-         "COBERTURA":20.87,
-         "DEDUCIBLE":15,
-         "TOTAL_SERVICIO":60.56,
-         "MEDICO":{
-            "ID_MEDICO":3,
-            "NOMBRE":"Dr. Jorge Ramírez"
-         },
-         "ESPECIALIDAD":"Medicina General"
-      },
-      {
-         "ID_SERVICIO":12,
-         "DESCRIPCION":"Consulta Nutricional",
-         "PRECIO_UNITARIO":55,
+         "CANTIDAD":2,
          "COBERTURA":20.87,
          "DEDUCIBLE":15,
          "TOTAL_SERVICIO":60.56,
